@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DatabaseSettings">
+    <option name="annotationOption" value="JPA annotations" />
+    <option name="database" value="myvote" />
+    <option name="excludedFields">
+      <list>
+        <option value="" />
+      </list>
+    </option>
+    <option name="password" value="admin" />
+    <option name="port" value="5432" />
+    <option name="selectedPackage" value="com.lvt.apps.myvote.ms.db.myvote_rdbms.entities" />
+    <option name="typeMappings">
+      <map>
+        <entry key="CHAR" value="String" />
+      </map>
+    </option>
+    <option name="username" value="postgres" />
+  </component>
+</project>
