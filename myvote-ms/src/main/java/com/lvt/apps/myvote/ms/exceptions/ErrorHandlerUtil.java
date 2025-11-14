@@ -1,4 +1,52 @@
 package com.lvt.apps.myvote.ms.exceptions;
 
+
+import com.optum.ofsc.bds.accounts.dto.fdx.FdxErrorCodes;
+import com.optum.ofsc.bds.accounts.exception.constant.ErrorMessages;
+import com.optum.ofsc.bds.accounts.model.Error;
+import lombok.experimental.UtilityClass;
+import org.slf4j.MDC;
+import org.springframework.util.StringUtils;
+
+import java.util.UUID;
+
+import static com.optum.ofsc.bds.accounts.configuration.LoggingFilter.MDC_REQUEST_CORRELATION_ID_KEY;
+
+@UtilityClass
 public class ErrorHandlerUtil {
+
+    private static final String DEBUG_MESSAGE = "Please share this correlationId with the team if " +
+            "you need assistance. CorrelationId: %s.";
+
+    /**
+     * Gets the request ID from MDC if available, otherwise generates a new UUID.
+     * This ensures consistency with the RequestTrackingFilter.
+     */
+    public static String getRequestId() {
+        String requestId = MDC.get(MDC_REQUEST_CORRELATION_ID_KEY);
+        if (!StringUtils.hasText(requestId)) {
+            requestId = UUID.randomUUID().toString();
+        }
+        return requestId;
+    }
+
+    /**
+     * Constructs the debug message including the request ID if in a non-production profile.
+     * Otherwise, returns null to omit the debug message.
+     */
+    public static String getDebugMessage(String requestId) {
+        return DEBUG_MESSAGE.formatted(requestId);
+    }
+
+    /**
+     * Creates a standardized bad request Error object.
+     *
+     * @return Error object representing a bad request
+     */
+    public static Error badRequest() {
+        return new Error()
+                .code(FdxErrorCodes.INVALID_INPUT)
+                .message(ErrorMessages.INVALID_INPUT)
+                .debugMessage(ErrorHandlerUtil.getDebugMessage(getRequestId()));
+    }
 }
