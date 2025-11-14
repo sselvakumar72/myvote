@@ -1,16 +1,16 @@
 package com.lvt.apps.myvote.ms.exceptions;
 
 
-import com.optum.ofsc.bds.accounts.dto.fdx.FdxErrorCodes;
-import com.optum.ofsc.bds.accounts.exception.constant.ErrorMessages;
-import com.optum.ofsc.bds.accounts.model.Error;
+import com.lvt.apps.myvote.ms.exceptions.constants.ErrorCodes;
+import com.lvt.apps.myvote.ms.exceptions.constants.ErrorMessages;
 import lombok.experimental.UtilityClass;
 import org.slf4j.MDC;
 import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 
-import static com.optum.ofsc.bds.accounts.configuration.LoggingFilter.MDC_REQUEST_CORRELATION_ID_KEY;
+import static com.lvt.apps.myvote.ms.configs.LoggingFilter.MDC_REQUEST_CORRELATION_ID_KEY;
+
 
 @UtilityClass
 public class ErrorHandlerUtil {
@@ -43,10 +43,10 @@ public class ErrorHandlerUtil {
      *
      * @return Error object representing a bad request
      */
-    public static Error badRequest() {
-        return new Error()
-                .code(FdxErrorCodes.INVALID_INPUT)
+    public static MyVoteError badRequest() {
+        return MyVoteError.builder()
+                .code(ErrorCodes.INVALID_INPUT_CODE)
                 .message(ErrorMessages.INVALID_INPUT)
-                .debugMessage(ErrorHandlerUtil.getDebugMessage(getRequestId()));
+                .build();
     }
 }

@@ -1,7 +1,8 @@
 package com.lvt.apps.myvote.ms.configs;
 
-mport com.optum.ofsc.bds.accounts.util.LoggerUtil;
-import com.optum.ofsc.bds.accounts.validation.LogInjectionUtil;
+import com.lvt.apps.myvote.ms.constants.MyVoteConstants;
+import com.lvt.apps.myvote.ms.utils.LoggerUtil;
+import com.lvt.apps.myvote.ms.validators.LogInjectionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -10,7 +11,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import java.util.Enumeration;
 
-import static com.optum.ofsc.bds.accounts.validation.constants.ValidationConstants.AUTHORIZATION_HEADER;
 
 @Component
 @Slf4j
@@ -34,7 +34,7 @@ public class RequestValidationInterceptor implements HandlerInterceptor {
         Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()) {
             String header = headerNames.nextElement();
-            if (AUTHORIZATION_HEADER.equalsIgnoreCase(header)) {
+            if (MyVoteConstants.AUTHORIZATION_HEADER.equalsIgnoreCase(header)) {
                 continue; // Skip Authorization header
             }
             String value = request.getHeader(header);
