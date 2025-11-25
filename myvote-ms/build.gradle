@@ -2,13 +2,30 @@ plugins {
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'java'
+    id 'maven-publish'
 }
 
 group = 'com.lvt.apps.myvote'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
+    mavenLocal()
     mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_22
+    targetCompatibility = JavaVersion.VERSION_22
+    withSourcesJar()
+    // withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 dependencies {
@@ -41,6 +58,9 @@ dependencies {
     testCompileOnly 'org.projectlombok:lombok:1.18.32'
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.32'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // mavenLocal
+    implementation 'com.lvt.apps:commons-sdk:0.0.1-SNAPSHOT'
 }
 
 tasks.named('test') {

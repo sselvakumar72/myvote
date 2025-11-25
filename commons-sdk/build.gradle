@@ -2,13 +2,29 @@ plugins {
     id 'org.springframework.boot' version '3.3.0'
     id 'io.spring.dependency-management' version '1.1.5'
     id 'java'
+    id 'maven-publish'
 }
 
-group = 'com.lvt.apps.myvote'
+group = 'com.lvt.apps'
 version = '0.0.1-SNAPSHOT'
 
 repositories {
     mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_22
+    targetCompatibility = JavaVersion.VERSION_22
+    withSourcesJar()
+    // withJavadocJar()
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
 }
 
 dependencies {
