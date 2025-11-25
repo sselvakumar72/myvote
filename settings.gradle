@@ -1,3 +1,4 @@
-rootProject.name = 'MyVote'
-include 'myvote-ms'
+rootProject.name = 'lvt-apps'
 
+include 'myvote-ms'
+include 'commons-sdk'
