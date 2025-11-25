@@ -1,8 +1,5 @@
 package com.lvt.apps.myvote.ms.logging;
 
-import com.optum.ofsc.hba.commonssdk.logging.model.AuditHeader;
-import com.optum.ofsc.hba.commonssdk.logging.model.LoggingCorrelationId;
-import com.optum.ofsc.hba.commonssdk.logging.util.CachedBodyHttpServletRequest;
 import io.micrometer.core.instrument.util.IOUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,19 +20,19 @@ import java.nio.charset.StandardCharsets;
 import java.util.Objects;
 
 @Slf4j
-public class RequestLoggingFilter extends OncePerRequestFilter {
+abstract class RequestLoggingFilter extends OncePerRequestFilter {
     public static final String LOG_PATTERN_CORRELATION_ID_KEY = "X-CID";
     public static final String CORRELATION_ID_KEY = "X-Correlation-Id";
     private static final String INPUT_AUDIT_KEY = "FARO-AUDIT-FARO-901";
     private static final String OUTPUT_AUDIT_KEY = "FARO-AUDIT-FARO-902";
     private static final String OID = "OID";
     private static final String ACTOR = "actor";
-    /**
+/*    *//**
      * Method that gets the correlationId from the request headers or create a new correlationId for the request.
      *
      * @param headers The headers of the request.
      * @return The correlationId for the request.
-     */
+     *//*
     private static String getCorrelationId(@NonNull AuditHeader headers) {
         if (StringUtils.isEmpty(headers.getCorrelationId())) {
             return java.util.UUID.randomUUID().toString();
@@ -44,7 +41,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
         return headers.getCorrelationId();
     }
 
-    /**
+    *//**
      * As part of our logs, we want to include an extended version of the correlationId to provide extra information.
      * This extended version will have the format: [{UUID/FARO_ID,{CorrelationId},actor={actor}}]
      * For example, [0lksds-4f20-4ccb-9a470-9eb56f,183de796-4147-40d4-9a17-837a2d71726d,actor=bank-api-gateway.optum.com]
@@ -54,7 +51,7 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
      * @param headers       The headers received in the input request.
      * @param correlationId The correlationId for the request.
      * @return The extended version of the correlationId.
-     */
+     *//*
     private static String getExtendedCorrelationId(@NonNull AuditHeader headers,
                                                    @NonNull String correlationId) {
 
@@ -169,5 +166,5 @@ public class RequestLoggingFilter extends OncePerRequestFilter {
         } finally {
             cleanMDCCorrelationId();
         }
-    }
+    }*/
 }

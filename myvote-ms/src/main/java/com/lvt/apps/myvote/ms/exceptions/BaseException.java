@@ -12,7 +12,4 @@ abstract class BaseException extends Exception {
         this.error = error;
     }
 
-    public MyVoteError getError() {
-        return error;
-    }
 }

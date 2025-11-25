@@ -3,7 +3,7 @@ package com.lvt.apps.myvote.ms.utils;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
-import com.optum.ofsc.hba.commonssdk.model.api.util.EmptyObject;
+import com.lvt.apps.myvote.ms.dtos.EmptyObject;
 
 import java.io.IOException;
 import java.io.Serial;

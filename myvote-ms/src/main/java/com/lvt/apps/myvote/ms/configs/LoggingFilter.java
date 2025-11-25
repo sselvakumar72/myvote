@@ -1,16 +1,16 @@
 package com.lvt.apps.myvote.ms.configs;
 
-import com.optum.ofsc.bds.accounts.logging.util.CachedBodyHttpServletRequest;
+import com.lvt.apps.myvote.ms.logging.CachedBodyHttpServletRequest;
 import io.micrometer.core.instrument.util.IOUtils;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import net.logstash.logback.argument.StructuredArguments;
 import org.apache.commons.lang3.StringUtils;
-import org.jetbrains.annotations.NotNull;
 import org.slf4j.MDC;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -35,8 +35,7 @@ import java.util.UUID;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class LoggingFilter extends OncePerRequestFilter {
-    private static final String REQUEST_CORRELATION_ID_HEADER_KEY = "x-fapi-interaction-id";
-    private static final String OPTUM_CID_EXT = "x-optum-cid-ext";
+    private static final String REQUEST_CORRELATION_ID_HEADER_KEY = "X-Interaction-Id";
     public static final String MDC_REQUEST_CORRELATION_ID_KEY = "X-Correlation-Id"; // Changed to match your requirement
     public static final String OUTBOUND_AUDIT_KEY = "BDS-ACCOUNT-AUDIT-902";
     public static final String INBOUND_AUDIT_KEY = "BDS-ACCOUNT-AUDIT-901";
@@ -81,7 +80,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     }
 
     private static void logOutboundOperation(@NonNull CachedBodyHttpServletRequest request,
-            @NonNull ContentCachingResponseWrapper response, long executionTime) {
+                                             @NonNull ContentCachingResponseWrapper response, long executionTime) {
         String url = getFullURL(request);
         String responseBody = getStringValue(response.getContentAsByteArray(), response.getCharacterEncoding());
         int httpStatus = response.getStatus();
@@ -121,13 +120,11 @@ public class LoggingFilter extends OncePerRequestFilter {
 
     private static void cleanMDCCorrelationId() {
         MDC.remove(MDC_REQUEST_CORRELATION_ID_KEY); // Updated to use consistent key
-        MDC.remove(OPTUM_CID_EXT);
     }
 
     private static void addCorrelationIdToMDC(CachedBodyHttpServletRequest request) {
         String correlationId = getCorrelationId(request);
         MDC.put(MDC_REQUEST_CORRELATION_ID_KEY, correlationId); // Updated to use consistent key
-        MDC.put(OPTUM_CID_EXT, UUID.randomUUID().toString());
     }
 
     @Override

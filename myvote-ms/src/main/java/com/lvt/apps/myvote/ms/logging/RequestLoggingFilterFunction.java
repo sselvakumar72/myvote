@@ -88,10 +88,9 @@ public class RequestLoggingFilterFunction implements ExchangeFilterFunction {
      */
     private String getResponseErrorLogString(ClientResponse response, Throwable error, AtomicBoolean responseLogged) {
         if (!responseLogged.getAndSet(true)) {
-            StringBuilder logOutput = new StringBuilder(LoggingFormatter.generateResponseHeadingText(externalSystem));
-            logOutput.append(LoggingFormatter.formatNameValue("Status", String.valueOf(response.statusCode())));
-            logOutput.append(LoggingFormatter.formatNameValue("Error", error.getMessage()));
-            return logOutput.toString();
+            String logOutput = LoggingFormatter.generateResponseHeadingText(externalSystem) + LoggingFormatter.formatNameValue("Status", String.valueOf(response.statusCode())) +
+                    LoggingFormatter.formatNameValue("Error", error.getMessage());
+            return logOutput;
         }
         return null;
     }

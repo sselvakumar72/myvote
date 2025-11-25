@@ -9,15 +9,15 @@ import java.sql.Timestamp;
  */
 abstract class AuditEntity {
 
-    @Column(name = "created_by", nullable = false, updatable = false)
-    private Long l_created_by;
+    @Column(name = "l_created_by", nullable = false, updatable = false)
+    private Long createdBy;
 
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private Timestamp t_created_at;
+    @Column(name = "t_created_at", nullable = false, updatable = false)
+    private Timestamp createdAt;
 
-    @Column(name = "last_updated_by, nullable = false, updatable = false)")
-    private Long l_last_updated_by;
+    @Column(name = "l_last_updated_by", nullable = false, updatable = false)
+    private Long lastUpdatedBy;
 
-    @Column(name = "last_updated_at, nullable = false, updatable = false)")
-    private Timestamp t_last_updated_by;
+    @Column(name = "t_last_updated_at", nullable = false, updatable = false)
+    private Timestamp lastUpdatedAt;
 }

@@ -4,7 +4,7 @@ package com.lvt.apps.myvote.ms.exceptions;
 import com.lvt.apps.myvote.ms.constants.MyVoteConstants;
 import com.lvt.apps.myvote.ms.exceptions.constants.ErrorCodes;
 import com.lvt.apps.myvote.ms.exceptions.constants.ErrorMessages;
-import jakarta.validation.constraints.NotNull;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -33,9 +33,9 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     @Override
     protected ResponseEntity<Object> handleMissingServletRequestParameter(
             MissingServletRequestParameterException ex,
-            @NotNull HttpHeaders headers,
-            @NotNull HttpStatusCode status,
-            @NotNull WebRequest request) {
+            @NonNull HttpHeaders headers,
+            @NonNull HttpStatusCode status,
+            @NonNull WebRequest request) {
         String requestId = ErrorHandlerUtil.getRequestId();
         log.info("Missing required request parameter: {} [RequestId: {}]", ex.getParameterName(), requestId);
 

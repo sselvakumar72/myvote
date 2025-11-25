@@ -23,7 +23,7 @@ public class LogInterceptor implements ClientInterceptor {
      * Empty implementation to comply with ClientInterceptor interface
      * @param messageContext contains the outgoing request message
      * @return boolean hardcoded true
-     * @throws WebServiceClientException
+     * @throws WebServiceClientException exception thrown on handler execution, if any
      */
     @Override public boolean handleResponse(MessageContext messageContext) throws WebServiceClientException {
         return true;
