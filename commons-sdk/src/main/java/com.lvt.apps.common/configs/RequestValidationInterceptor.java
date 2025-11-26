@@ -2,9 +2,10 @@ package com.lvt.apps.common.configs;
 
 import com.lvt.apps.common.constants.MyVoteConstants;
 import com.lvt.apps.common.utils.LoggerUtil;
-import com.lvt.apps.common.validators.LogInjectionUtil;
+import com.lvt.apps.common.utils.LogInjectionUtil;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -12,22 +13,19 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import java.util.Enumeration;
 
 
-@Component
 @Slf4j
+@Component
 public class RequestValidationInterceptor implements HandlerInterceptor {
 
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response, @NonNull Object handler) {
         if (!validateHeaders(request, response)) {
             return false;
         }
         if (!validateUri(request, response)) {
             return false;
         }
-        if (!validateRequestParameters(request, response)) {
-            return false;
-        }
-        return true;
+        return validateRequestParameters(request, response);
     }
 
     private boolean validateHeaders(HttpServletRequest request, HttpServletResponse response) {

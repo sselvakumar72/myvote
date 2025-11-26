@@ -1,4 +1,4 @@
-package com.lvt.apps.common.validators;
+package com.lvt.apps.common.utils;
 
 import lombok.experimental.UtilityClass;
 import java.util.regex.Pattern;

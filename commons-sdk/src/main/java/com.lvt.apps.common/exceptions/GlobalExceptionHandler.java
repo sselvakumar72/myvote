@@ -46,5 +46,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
                         .description(MyVoteConstants.EMPTY_STRING).build());
     }
 
-
+/*
+Suggested small improvements (optional)
+Include the missing parameter name or the request id in the MyVoteError.description to aid debugging.
+Add handlers for validation exceptions (e.g., MethodArgumentNotValidException) and general fallback handlers to ensure consistent error shapes.
+Consider using the provided status argument instead of hardcoding HttpStatus.BAD_REQUEST if more flexibility is desired.
+ */
 }

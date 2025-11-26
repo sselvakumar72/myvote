@@ -36,9 +36,9 @@ import java.util.UUID;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class LoggingFilter extends OncePerRequestFilter {
     private static final String REQUEST_CORRELATION_ID_HEADER_KEY = "X-Interaction-Id";
-    public static final String MDC_REQUEST_CORRELATION_ID_KEY = "X-Correlation-Id"; // Changed to match your requirement
-    public static final String OUTBOUND_AUDIT_KEY = "BDS-ACCOUNT-AUDIT-902";
-    public static final String INBOUND_AUDIT_KEY = "BDS-ACCOUNT-AUDIT-901";
+    public static final String MDC_REQUEST_CORRELATION_ID_KEY = "X-Correlation-Id";
+    public static final String OUTBOUND_AUDIT_KEY = "LVT-MYVOTE-AUDIT-902";
+    public static final String INBOUND_AUDIT_KEY = "LVT-MYVOTE-AUDIT-901";
 
     private static String getCorrelationId(@NonNull CachedBodyHttpServletRequest request) {
         final String correlationId = request.getHeader(REQUEST_CORRELATION_ID_HEADER_KEY);

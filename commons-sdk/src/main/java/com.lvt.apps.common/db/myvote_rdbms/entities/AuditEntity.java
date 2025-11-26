@@ -1,4 +1,4 @@
-package com.lvt.apps.common.db.myvote_rdbms.entities.base;
+package com.lvt.apps.common.db.myvote_rdbms.entities;
 
 import jakarta.persistence.Column;
 
@@ -15,9 +15,9 @@ abstract class AuditEntity {
     @Column(name = "t_created_at", nullable = false, updatable = false)
     private Timestamp createdAt;
 
-    @Column(name = "l_last_updated_by", nullable = false, updatable = false)
+    @Column(name = "l_last_updated_by", nullable = false)
     private Long lastUpdatedBy;
 
-    @Column(name = "t_last_updated_at", nullable = false, updatable = false)
+    @Column(name = "t_last_updated_at", nullable = false)
     private Timestamp lastUpdatedAt;
 }
