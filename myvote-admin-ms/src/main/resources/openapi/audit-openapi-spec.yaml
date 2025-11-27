@@ -1,0 +1,31 @@
+openapi: 3.0.3
+info:
+  title: Audit Entity API
+  version: 1.0.0
+
+components:
+  schemas:
+    AuditEntity:
+      type: object
+      properties:
+        createdBy:
+          type: integer
+          format: int64
+          description: Identifier of the entity instance being created
+        createdAt:
+          type: string
+          format: date-time
+          description: Timestamp when the entity instance was created
+        updatedBy:
+          type: integer
+          format: int64
+          description: Identifier of the entity instance being last updated
+        updatedAt:
+          type: string
+          format: date-time
+          description: Timestamp when the entity instance was last updated
+      x-javaPackage: com.lvt.apps.myvote.admin.ms.db.postgre.entities
+      x-javaClassName: AuditEntity
+      required:
+        - createdBy
+        - createdAt

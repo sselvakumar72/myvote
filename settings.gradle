@@ -1,5 +1,6 @@
 rootProject.name = 'lvt-apps'
 
 include 'myvote-ms'
-include 'commons-sdk'
 include 'myvote-admin-ms'
+
+include 'commons-sdk'

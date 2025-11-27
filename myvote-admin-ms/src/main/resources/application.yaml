@@ -1,0 +1,25 @@
+spring:
+  application:
+    name: myvote-admin-ms
+    datasource:
+      url: jdbc:postgresql://localhost:5432/myvote_app
+      username: myvote_app
+      password: myvote_app
+      driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+server:
+  port: 80800
+
+logging:
+  level:
+    root: INFO
+    org.springframework.web: DEBUG
+    com.lvt.apps.myvote.admin.ms: DEBUG

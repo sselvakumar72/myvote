@@ -1,0 +1,124 @@
+openapi: 3.1.2
+info:
+  title: Users API
+  version: 1.0.0
+
+
+# yaml
+paths:
+  /users:
+    post:
+      summary: Create a new user
+      description: Creates a user and returns the created resource.
+      operationId: createUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserCreate'
+      responses:
+        '201':
+          description: User Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+        '503':
+          description: Service unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+
+components:
+  schemas:
+    UserCreate:
+      type: object
+      required:
+        - username
+        - password
+        - email
+      properties:
+        username:
+          type: string
+          maxLength: 48
+          description: The user's username
+          x-columnName: c_user_name
+        password:
+          type: string
+          format: password
+          maxLength: 254
+          description: The user's password
+          x-columnName: c_password
+        firstName:
+          type: string
+          maxLength: 32
+          description: The user's first name
+          x-columnName: c_first_name
+          nullable: true
+        lastName:
+          type: string
+          maxLength: 32
+          description: The user's last name
+          x-columnName: c_last_name
+          nullable: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+          description: The user's email address
+          x-columnName: c_email_id
+
+    User:
+      allOf:
+        - $ref: '#/components/schemas/UserCreate'
+        - type: object
+          properties:
+            id:
+              type: integer
+              format: int64
+              description: Unique identifier for the user
+              x-columnName: id
+            lastLoginAt:
+              type: string
+              format: date-time
+              description: Timestamp of the user's last login
+              x-columnName: t_last_login_at
+              nullable: true
+            status:
+              type: string
+              maxLength: 1
+              description: The user's current status
+              x-columnName: c_status
+          x-persistence:
+            tableName: users
+          x-primaryKey:
+            - id
+          x-persistenceGeneratedValue:
+            strategy: IDENTITY
+          x-javaPackage: com.lvt.apps.myvote.admin.ms.db.postgre.entities
+          x-javaClassName: UsersEntity
+          x-extends:
+            - $ref: '#/components/schemas/AuditEntity'
+          x-uniqueConstraints:
+            - fields:
+                - username
+                - email
+
+    ApiResponseError:
+      type: object
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+      required:
+        - code
+        - message

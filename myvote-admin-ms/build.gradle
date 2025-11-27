@@ -1,4 +1,41 @@
+
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.5.0'
+	id 'io.spring.dependency-management' version '1.1.7'
+	id 'org.openapi.generator' version '7.10.0'
+}
+
 group = 'com.lvt.apps.myvote'
 version = '0.0.1-SNAPSHOT'
 
+// groovy
+def specFile = file("$projectDir/src/main/resources/openapi/users-openapi-spec.yaml")
+if (!specFile.exists()) {
+    throw new GradleException("OpenAPI spec file not found: ${specFile.absolutePath}")
+}
+
+openApiGenerate {
+    generatorName.set('spring')
+    inputSpec.set(specFile.toURI().toString())
+    outputDir.set("$projectDir/build/generated")
+    apiPackage.set("com.lvt.apps.myvote.admin.ms.controllers.api")
+    modelPackage.set("com.lvt.apps.myvote.admin.ms.dtos")
+
+    configOptions.set([
+      useTags            : 'true',
+      dateLibrary        : 'java8',
+      useJakartaEe       : 'true',
+      nullableReferences : 'false',
+      interfaceOnly      : 'true'
+    ])
+}
+
+tasks.named("compileJava") {
+    dependsOn tasks.named("openApiGenerate")
+}
+
+clean.doFirst {
+	delete "$projectDir/build/generated"
+}
 
