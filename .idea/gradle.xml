@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/commons-sdk" />
+            <option value="$PROJECT_DIR$/myvote-admin-ms" />
             <option value="$PROJECT_DIR$/myvote-ms" />
           </set>
         </option>
