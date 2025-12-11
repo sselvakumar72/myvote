@@ -2,7 +2,7 @@ spring:
   application:
     name: myvote-admin-ms
     datasource:
-      url: jdbc:postgresql://localhost:5432/myvote_app
+      url: jdbc:postgresql://localhost:5432/myvote
       username: myvote_app
       password: myvote_app
       driver-class-name: org.postgresql.Driver

@@ -4,6 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.7'
     id 'java'
     id 'maven-publish'
+    id 'entity-generator-plugin' version '1.0.0'
 }
 
 ext {
@@ -49,12 +50,15 @@ subprojects {
         implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.9'
         implementation 'org.mapstruct:mapstruct:1.6.3'
 
+        implementation 'com.google.code.gson:gson:2.10.1'
         implementation 'org.openapitools:jackson-databind-nullable:0.2.6'
         implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
 
 	    implementation "net.logstash.logback:logstash-logback-encoder:${logstashVersion}"
         implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
         implementation "com.lvt.apps:commons-sdk:${commonsSdkVersion}"
+
+        implementation "org.openapitools:openapi-generator-gradle-plugin:7.10.0"
 
         compileOnly "org.projectlombok:lombok:${lombokVersion}"
         annotationProcessor "org.projectlombok:lombok:${lombokVersion}"

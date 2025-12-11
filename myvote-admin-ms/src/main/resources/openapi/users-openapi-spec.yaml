@@ -119,6 +119,10 @@ components:
           type: integer
         message:
           type: string
+        timestamp:
+          type: string
+          format: date-time
       required:
         - code
         - message
+        - timestamp

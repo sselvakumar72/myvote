@@ -9,11 +9,65 @@ plugins {
 group = 'com.lvt.apps.myvote'
 version = '0.0.1-SNAPSHOT'
 
-// groovy
+
+
 def specFile = file("$projectDir/src/main/resources/openapi/users-openapi-spec.yaml")
 if (!specFile.exists()) {
     throw new GradleException("OpenAPI spec file not found: ${specFile.absolutePath}")
 }
+
+sourceSets {
+    main {
+        java {
+            srcDir "$projectDir/build/generated/src/main/java"
+            srcDir "$projectDir/build/generated-entities/src/main/java"
+        }
+    }
+}
+
+tasks.register("openApiGenerateEntities", org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName.set("java")
+    inputSpec.set(specFile.toURI().toString())
+    outputDir.set("$projectDir/build/generated-entities")
+    modelPackage.set("com.lvt.apps.myvote.admin.ms.entities")
+
+    // We only want the models (entities), not the other client code.
+    globalProperties.set([
+        models: ""
+    ])
+
+    configOptions.set([
+        dateLibrary: "java8",
+        useJakartaEe: "true", // For Spring Boot 3+
+        jpa: "true", // Enable JPA annotations
+        hideGenerationTimestamp: "true",
+        interfaceOnly: "false",
+        modelNameSuffix: "Entity",
+        useBeanValidation: "false",
+        nullableReferences: "false",
+        serializationLibrary: "jackson"
+
+    ])
+}
+
+tasks.register("openApiGenerateJPAEntities", org.openapitools.generator.gradle.plugin.tasks.GenerateTask) {
+    generatorName = "jpa" // use the JPA generator
+    inputSpec.set(specFile.toURI().toString())
+    outputDir.set("$projectDir/build/generated-entities")
+    modelPackage.set("com.lvt.apps.myvote.admin.ms.entities")
+
+    configOptions = [
+        useBeanValidation: "true",
+        generateJpaAnnotations: "true",
+        dateLibrary: "java8",
+        useJakartaEe: "true",
+        serializationLibrary: "jackson",
+        nullableReferences : 'false',
+        interfaceOnly      : 'false',
+        modelNameSuffix: "Entity"
+    ]
+}
+
 
 openApiGenerate {
     generatorName.set('spring')
@@ -26,16 +80,25 @@ openApiGenerate {
       useTags            : 'true',
       dateLibrary        : 'java8',
       useJakartaEe       : 'true',
+      useBeanValidation  : 'true',
       nullableReferences : 'false',
-      interfaceOnly      : 'true'
+      interfaceOnly      : 'false',
+      serializationLibrary: 'jackson',
+      modelNameSuffix: "Dto"
     ])
+}
+
+entityGen {
+    configPath = 'src/main/resources/entityGenConfig.yml'
 }
 
 tasks.named("compileJava") {
     dependsOn tasks.named("openApiGenerate")
+    //dependsOn tasks.named("openApiGenerateEntities")
+    dependsOn tasks.named("openApiGenerateJPAEntities")
 }
 
 clean.doFirst {
-	delete "$projectDir/build/generated"
+	delete "$projectDir/build"
 }
 
